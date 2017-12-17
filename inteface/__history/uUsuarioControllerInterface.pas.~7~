@@ -1,0 +1,18 @@
+unit uUsuarioControllerInterface;
+
+interface
+
+uses
+  uUsuarioController,
+  uUsuarioViewInterface,
+  uUsuarioModeloInterface;
+
+type
+  IUsuarioControllerInterface = interface
+    ['{09FF0249-909B-4555-8963-0475FDD12CED}']
+
+  end;
+
+implementation
+
+end.

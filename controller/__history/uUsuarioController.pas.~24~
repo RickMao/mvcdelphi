@@ -1,0 +1,74 @@
+unit uUsuarioController;
+
+interface
+
+uses
+  uUsuarioControllerInterface,
+  uUsuarioModeloInterface,
+  uUsuarioViewInterface;
+
+type
+  TUsuarioController = class(TInterfacedObject, IUsuarioControllerInterface)
+  protected
+    FView:IUsuarioViewInterface;
+    FModel:IUsuarioModelInterface;
+    function getView:IUsuarioViewInterface;
+    function getModel:IUsuarioModelInterface;
+    procedure setView(const Value: IUsuarioViewInterface);
+    procedure setModel(const Value: IUsuarioModelInterface);
+    property View:IUsuarioViewInterface read getView write setView;
+    property Model:IUsuarioModelInterface read getModel write setModel;
+  public
+    constructor Cria_Se(View:IUsuarioViewInterface;
+     Model:IUsuarioModelInterface);
+    destructor Destrua_Se;
+    function login:boolean;
+  end;
+
+implementation
+
+{ TUsuarioController }
+
+uses uUsuarioLoginView;
+
+constructor TUsuarioController.Cria_Se(View:IUsuarioViewInterface;
+     Model:IUsuarioModelInterface);
+begin
+  inherited;
+  FView:=View;
+  FModel:=Model;
+end;
+
+destructor TUsuarioController.Destrua_Se;
+begin
+  inherited;
+end;
+
+function TUsuarioController.getModel: IUsuarioModelInterface;
+begin
+  Result:=FModel;
+end;
+
+function TUsuarioController.getView: IUsuarioViewInterface;
+begin
+  Result:=FView;
+end;
+
+function TUsuarioController.login: boolean;
+begin
+  FModel.Nome:=FView.Nome;
+  FModel.Senha:=FView.Senha;
+  Result:=FModel.logar;
+end;
+
+procedure TUsuarioController.setModel(const Value: IUsuarioModelInterface);
+begin
+  FModel:=Value;
+end;
+
+procedure TUsuarioController.setView(const Value: IUsuarioViewInterface);
+begin
+  FView:=Value;
+end;
+
+end.

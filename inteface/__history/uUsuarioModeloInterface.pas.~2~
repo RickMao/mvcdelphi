@@ -1,0 +1,18 @@
+unit uUsuarioModeloInterface;
+
+interface
+
+type
+  IUsuarioModelInterface = class
+    ['{DC5B1E5B-4BA2-4E51-BCAA-6CF35031FB84}']
+    function getNome:String;
+    function getSenha:String;
+    procedure setNome(const Value: String);
+    procedure setSenha(const Value: String);
+    property Nome:String read getNome write setNome;
+    property Senha:String read getSenha write setSenha;
+  end;
+
+implementation
+
+end.

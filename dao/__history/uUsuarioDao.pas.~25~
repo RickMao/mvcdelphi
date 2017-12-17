@@ -1,0 +1,108 @@
+unit uUsuarioDao;
+
+interface
+
+uses
+  MyAccess, uUsuarioModel, Criptografia, uConstantes;
+
+type
+  TUsuarioDao = class
+  public
+    function inserir(const Usuario:TUsuarioModel):Boolean;
+    function alterar(const Usuario:TUsuarioModel):Boolean;
+    function carregar(const Usuario:TUsuarioModel):Boolean;
+    function excluir(const Usuario:TUsuarioModel):Boolean;
+    function obter(const Filtro:String):TMyQuery;
+  end;
+
+
+implementation
+
+uses uAplicacaoObj, System.SysUtils, System.Classes;
+
+{ TUsuarioDao }
+
+function TUsuarioDao.alterar(const Usuario: TUsuarioModel): Boolean;
+var
+  vQry:TMyQuery;
+begin
+  vQry:=TMyQuery.Create(nil);
+  try
+    with vQry do
+    begin
+      Close;
+      Params.Clear;
+      with SQL do
+      begin
+        Clear;
+        Add('INSERT INTO usuario (');
+        Add('');
+      end;
+    end;
+  finally
+    FreeAndNil(vQry);
+  end;
+end;
+
+function TUsuarioDao.carregar(const Usuario: TUsuarioModel): Boolean;
+var
+  aSQL:TStringList;
+begin
+  Result:=False;
+  aSQL:=TStringList.Create;
+  try
+    with aSQL do
+    begin
+      Clear;
+      Add('WHERE');
+      Add(' nomusu='+QuotedStr(Usuario.Nome));
+    end;
+    with obter(aSQL.Text) do
+    begin
+      if (RecNo>0) then
+      begin
+        if (Crypt('D', FieldByName('senusu').AsString, cChave)=Usuario.Senha) then
+          Result:=True;
+      end;
+    end;
+  finally
+    FreeAndNil(aSQL);
+  end;
+end;
+
+function TUsuarioDao.excluir(const Usuario: TUsuarioModel): Boolean;
+begin
+
+end;
+
+function TUsuarioDao.inserir(const Usuario: TUsuarioModel): Boolean;
+begin
+
+end;
+
+function TUsuarioDao.obter(const Filtro: String): TMyQuery;
+begin
+  Result:=Aplicacao.Conexao.CriarQuery;
+  try
+    with Result do
+    begin
+      Close;
+      Params.Clear;
+      with SQL do
+      begin
+        Clear;
+        Add('SELECT');
+        Add(' idusuario,');
+        Add(' nomusu,');
+        Add(' senusu');
+        Add('FROM');
+        Add(' usuario');
+        Add(Filtro);
+      end;
+    end;
+  finally
+    Result.Open;
+  end;
+end;
+
+end.

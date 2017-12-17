@@ -1,0 +1,60 @@
+unit uUsuarioModel;
+
+interface
+
+uses
+  uUsuarioModeloInterface;
+
+type
+  TUsuarioModel = class(TInterfacedObject, IUsuarioModelInterface)
+  protected
+    FNome:String;
+    FSenha:String;
+    function getNome:String;
+    function getSenha:String;
+    procedure setNome(const Value: String);
+    procedure setSenha(const Value: String);
+    property Nome:String read getNome write setNome;
+    property Senha:String read getSenha write setSenha;
+  public
+    constructor Cria_Se;
+    destructor Destrua_Se;
+  end;
+
+implementation
+
+{ TUsuarioModel }
+
+constructor TUsuarioModel.Cria_Se;
+begin
+  inherited;
+
+end;
+
+destructor TUsuarioModel.Destrua_Se;
+begin
+
+  inherited;
+end;
+
+function TUsuarioModel.getNome: String;
+begin
+  Result:=FNome;
+end;
+
+function TUsuarioModel.getSenha: String;
+begin
+  Result:=FSenha;
+end;
+
+procedure TUsuarioModel.setNome(const Value: String);
+begin
+
+end;
+
+procedure TUsuarioModel.setSenha(const Value: String);
+begin
+
+end;
+
+end.
